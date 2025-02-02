@@ -29,7 +29,9 @@ public class UserService {
 
 	public ResponseEntity<String> create(UserDto userDto) {
 		User user = dtoTOEntity(userDto);
-		user.setPassword(encoder.encode(user.getPassword()));
+		String hashPassword=encoder.encode(user.getPassword());
+//		System.out.println(hashPassword);
+		user.setPassword(hashPassword);
 		repo.save(user);
 		return new ResponseEntity<>("Success", HttpStatus.CREATED);
 
@@ -53,8 +55,12 @@ public class UserService {
 	public ResponseEntity<String> verify(UserDto userdto) {
 		// TODO Auto-generated method stub
 		User user =dtoTOEntity(userdto);
+//		String rawpassString=user.getPassword();
+//		System.out.println(rawpassString);
 		Authentication authentication =authmanager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
+		System.out.println(authentication.isAuthenticated());
 		if(authentication.isAuthenticated()) {
+//			System.out.println(authentication.getName());
 			return jwtService.generateToken(user);
 		}
 		return new ResponseEntity<>("Failed",HttpStatus.BAD_REQUEST);

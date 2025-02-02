@@ -1,5 +1,6 @@
 package com.gaurav.springboot.service;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -26,7 +27,9 @@ public class MyUserDetailService  implements UserDetailsService{
 		if (user == null) {
 			throw new UsernameNotFoundException("user not found");
 		} else {
-			return new UserPrinciple(user);
+			UserPrinciple userp=new UserPrinciple(user);
+//			System.out.println(userp.getPassword());
+			return userp;
 		}
 
 	}
