@@ -28,7 +28,7 @@ public class Controller{
 		return service.getAllQuestionsByCategory(category);
 	}
 
-	@GetMapping("+")
+	@GetMapping("/getQuestion")
 	public List<Question> getQuestion() {
 		return service.getAllQuestions();
 	}
