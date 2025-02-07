@@ -16,6 +16,7 @@ import org.apache.hc.core5.function.Decorator;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,20 +41,10 @@ import lombok.extern.log4j.Log4j;
 @Service
 public class JWTService {
 
-	public String secretKey = "";
+	@Value("${jwt.secret}")
+	public String secretKey ;
 	
 	private static final Logger logger = LoggerFactory.getLogger(JWTService.class);
-
-	public JWTService() {
-		try {
-			KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
-			SecretKey sk = keyGen.generateKey();
-			secretKey = Base64.getEncoder().encodeToString(sk.getEncoded());
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	public ResponseEntity<String> generateToken(User user) {
 		// TODO Auto-generated method stub
@@ -68,8 +59,8 @@ public class JWTService {
 
 	private SecretKey getkey() {
 		// TODO Auto-generated method stub
-		byte[] keyByte = Decoders.BASE64.decode(secretKey);
-		return Keys.hmacShaKeyFor(keyByte);
+		return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
+	
 	}
 
 	public String extractUserName(String token) {

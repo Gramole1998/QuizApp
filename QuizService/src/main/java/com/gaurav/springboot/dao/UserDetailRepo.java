@@ -9,4 +9,6 @@ import com.gaurav.springboot.quiz.User;
 public interface UserDetailRepo extends JpaRepository<User, Integer> {
 
 	public User findUserByUserName(String userName);
+
+//	public Boolean existsByUserName(String name);
 }

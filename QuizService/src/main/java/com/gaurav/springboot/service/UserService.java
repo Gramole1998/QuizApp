@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.gaurav.springboot.dao.UserDetailRepo;
+import com.gaurav.springboot.exception.UserNotFoundException;
 import com.gaurav.springboot.quiz.User;
 import com.gaurav.springboot.quiz.UserDto;
 
@@ -65,5 +66,11 @@ public class UserService {
 		}
 		return new ResponseEntity<>("Failed",HttpStatus.BAD_REQUEST);
 	}
+
+//	public Boolean getUserName(String name) {
+//		// TODO Auto-generated method stub
+//		Boolean present=repo.existsByUserName(name);
+//		return present;
+//	}
 
 }
